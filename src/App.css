@@ -90,23 +90,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.form-currency-group .currency-select img {
-  width: 25px;
+.options {
+  color: black;
+  font-size: 13px;
 }
 
-/* .currency-dropdown {
-  outline: none;
-  border: none;
-  background: none;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 0 10px 0 5px;
-} */
-
-.form-currency-group .currency-select .currency-dropdown option {
-  color: #000;
-  font-weight: 500;
+.form-currency-group .currency-select img {
+  width: 25px;
 }
 
 .form-currency-group .swap-icon {
@@ -174,17 +164,6 @@ body {
 
 /* ////////////////////////////////////////////////////////////////////e */
 /* App.css */
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.currency-input,
-.currency-selector {
-  margin-bottom: 20px;
-}
 
 input,
 select {
@@ -192,13 +171,4 @@ select {
   font-size: 16px;
   width: 100%;
   margin: 5px 0;
-}
-
-.result {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.error {
-  color: red;
 }

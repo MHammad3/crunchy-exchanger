@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { countriesData } from "./countryCurrencyCode";
+import { useEffect, useState, useRef } from "react";
+import SelectCountry from "./SelectCountry";
 import "./App.css";
 function App() {
   const [inputValue, setInputValue] = useState();
@@ -9,6 +9,12 @@ function App() {
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   const API_KEY = "d01727d85bb2f8dcd3795a08"; // Replace with your actual API key
+
+  const InputRF = useRef(null);
+
+  useEffect(() => {
+    InputRF.current.focus();
+  }, []);
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
@@ -38,6 +44,17 @@ function App() {
     setToCurrency(fromCurrency);
     setFromCurrency(toCurrency);
   }
+  function handleInput(e) {
+    const value = e.target.value;
+
+    // Allow only empty input or values greater than or equal to 1
+    if (value === "" || Number(value) >= 1) {
+      setInputValue(value); // Update state for valid input
+    } else {
+      setInputValue(""); // Clear the input if invalid
+      console.log("Value must be 1 or greater"); // Optional: log an error
+    }
+  }
 
   return (
     <div className="currency-converter">
@@ -50,38 +67,17 @@ function App() {
             type="number"
             placeholder={`Enter Amount in ${fromCurrency}`}
             value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
+            onChange={(e) => handleInput(e)}
+            ref={InputRF}
           />
         </div>
 
         <div className="form-group form-currency-group">
-          <div className="form-section">
-            <label className="form-label">From</label>
-            <select
-              className="form-input"
-              style={{ fontSize: "16px", color: "white", padding: "2px" }}
-              value={fromCurrency}
-              onChange={(e) => {
-                setFromCurrency(e.target.value);
-              }}
-            >
-              {countriesData.map((country, index) => {
-                return (
-                  <option
-                    key={index}
-                    value={country.currency_code}
-                    style={{ color: "black" }}
-                  >
-                    {country.currency_code}-{country.country}
-                  </option>
-                );
-              })}
-              {/* Add more currencies as needed */}
-            </select>
-          </div>
-
+          <SelectCountry
+            value={fromCurrency}
+            callBack={setFromCurrency}
+            text={"From"}
+          />
           <div className="swap-icon">
             <svg
               width="20"
@@ -96,30 +92,11 @@ function App() {
             </svg>
           </div>
 
-          <div className="form-section">
-            <label className="form-label">To</label>
-            <select
-              className="form-input"
-              style={{ fontSize: "16px", color: "white", padding: "2px" }}
-              value={toCurrency}
-              onChange={(e) => {
-                setToCurrency(e.target.value);
-              }}
-            >
-              {countriesData.map((country, index) => {
-                return (
-                  <option
-                    key={index}
-                    value={country.currency_code}
-                    style={{ color: "black" }}
-                  >
-                    {country.currency_code}-{country.country}
-                  </option>
-                );
-              })}
-              {/* Add more currencies as needed */}
-            </select>
-          </div>
+          <SelectCountry
+            value={toCurrency}
+            callBack={setToCurrency}
+            text={"To"}
+          />
         </div>
 
         <div className="result">
